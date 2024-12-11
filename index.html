@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected School Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: lavender;
+        }
+
+        .sidebar {
+            /* height: 100vh; */
+            height: 795px;
+            background-color: white;
+            padding-top: 20px;
+            margin: 20px;
+            border-radius: 30px;
+            width: 40%;
+            box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .nav-item {
+            margin-bottom: 2px;
+        }
+
+        .sidebar .nav-link {
+            color: #030303;
+            display: flex;
+            align-items: left;
+            transition: color 0.1s, background-color 0.1s;
+            /* Transition effect */
+        }
+
+        .sidebar .nav-link:hover {
+            color: #4cacf5af;
+            background-color: #c6c6c630;
+            border-radius: 15px;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            margin-left: 10px;
+            padding-top: 20px;
+            margin-right: 10px;
+
+        }
+
+        .welcome-bar {
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 1200px;
+            /* Adjusted to fit the width of main content */
+            margin-left: -5px;
+            border-radius: 15px;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .icons i {
+            font-size: 15px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .icons .dropdown {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .dropdown button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card,
+        .modal-content {
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+        }
+
+        .modal-footer {
+            background-color: #f8f9fa;
+        }
+
+        .invite-form input {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .title h4 {
+            color: #9267FF;
+            margin: 0;
+        }
+
+        .sidebar .title p {
+            margin: 0;
+            font-size: larger;
+
+        }
+
+        .sidebar .title hr {
+            border-top: 1px solid #8a8a8a;
+            margin: 10px 0;
+        }
+
+        .admin {
+            color: grey;
+
+        }
+
+        .card {
+            /* margin: 2px; */
+            border-radius: 20px;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #9267FF !important;
+
+        }
+
+        .nav-tabs .nav-link {
+            font-weight: bold;
+            margin-right: 140px;
+            color: black;
+        }
+
+        .tab-content {
+            padding: 20px;
+        }
+
+        .progress {
+            height: 15px;
+        }
+
+        .progress-bar {
+            background-color: #1bb53c;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+
+        .text-primary {
+            color: #9267FF !important;
+            margin-left: 20px !important;
+        }
+
+        .text-primary:hover {
+            text-decoration: underline;
+        }
+
+        .nav-tabs {
+            --bs-nav-tabs-border-width: 0px;
+
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .rounded-circle {
+            border-radius: 50%;
+        }
+
+        /* Custom scrollbar for WebKit browsers */
+        .mt-3::-webkit-scrollbar {
+            width: 4px;
+            /* Adjust the width to make it thinner */
+        }
+
+        .mt-3::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* Background of the scrollbar track */
+        }
+
+        .mt-3::-webkit-scrollbar-thumb {
+            background: #888;
+            /* Color of the scrollbar thumb */
+            border-radius: 2px;
+            /* Rounded corners of the scrollbar thumb */
+        }
+
+        .mt-3::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            /* Color of the scrollbar thumb on hover */
+        }
+
+        .mt-3::-webkit-scrollbar-button {
+            display: none;
+            /* Hides the up and down buttons */
+        }
+
+        /* Custom scrollbar for Firefox */
+        .mt-3 {
+            scrollbar-width: thin;
+            /* Makes the scrollbar thin */
+            scrollbar-color: #888 #f1f1f1;
+            /* Thumb and track colors */
+        }
+
+        .mt-3::-moz-scrollbar-button {
+            display: none;
+            /* Hides the up and down buttons */
+        }
+
+        .btn-primary {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #9267FF;
+            --bs-btn-border-color: #9267FF;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #b497fb;
+            --bs-btn-hover-border-color: #9267FF;
+            --bs-btn-focus-shadow-rgb: 49, 132, 253;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #9267FF;
+            --bs-btn-active-border-color: #0a53be;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #9267FF;
+            --bs-btn-disabled-border-color: #9267FF;
+            --bs-btn-border-radius: 20px;
+        }
+
+        h5 {
+
+            margin-bottom: .1rem;
+        }
+
+        .list-unstyled {
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .support-item {
+            color: #9267FF;
+            /* Change this color to your desired color */
+            margin-bottom: 10px;
+        }
+
+        .support-item:hover {
+            color: #b79aff;
+            /* Change this hover color if needed */
+        }
+
+        .badge-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .btn-primary {
+            margin-top: 5px;
+        }
+
+        hr {
+            margin: 0.3rem 0;
+        }
+
+        .support-item {
+            color: #9267FF;
+            margin-bottom: 3px;
+        }
+        .card, .modal-content {
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .modal-header, .modal-footer {
+            background-color: #f8f9fa;
+        }
+        .invite-form input {
+            margin-bottom: 10px;
+        }
+        .form-select {
+    --bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e);
+    display: block;
+    width: 100%;
+    padding: .375rem 2.25rem .375rem .75rem;
+    margin-top: 5px;
+        }
+
+        .assign-class .form-select {
+            border: none;
+            box-shadow: none;
+        }
+        .assign-class .form-select:focus {
+            border: none;
+            box-shadow: none;
+        }
+        .assign-class label {
+            display: inline-flex;
+            align-items: center;
+        }
+        .assign-class .fa-chevron-down {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar p-3">
+            <div class="title">
+                <h4>Connected</h4>
+                <p>School</p>
+                <h6 class="mt-3">Super Admin</h6>
+                <hr>
+            </div>
+            <p class="admin">Admin Tools</p>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-person-circle"></i> Directory
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-card-list"></i> Notice Board
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-book"></i> School Story
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="welcome-bar">
+                <h4>Welcome to Connected School Portal</h4>
+                <div class="icons">
+                    <i class="bi bi-clock" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Time"></i>
+                    <i class="bi bi-bell" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications"></i>
+                    <i class="bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Help"></i>
+                    <div class="dropdown">
+                        <i class="bi bi-person-circle" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="User"></i>
+                        <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    <div class="card p-3">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="teachers-tab" data-bs-toggle="tab"
+                                    data-bs-target="#teachers" type="button" role="tab" aria-controls="teachers"
+                                    aria-selected="true">Teachers</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="students-tab" data-bs-toggle="tab"
+                                    data-bs-target="#students" type="button" role="tab" aria-controls="students"
+                                    aria-selected="false">| Students</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="classes-tab" data-bs-toggle="tab" data-bs-target="#classes"
+                                    type="button" role="tab" aria-controls="classes" aria-selected="false">|
+                                    Classes</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="teachers" role="tabpanel"
+                                aria-labelledby="teachers-tab">
+                                <h5>Teachers and Staff Connected</h5>
+                                <p>Connect all teachers and staff that are using Connected School</p>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 3%;" aria-valuenow="3"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="mt-2">
+                                    <span>2 of 65 </span>
+                                    <a href="#" class="text-primary"> Edit</a>
+                                </div>
+                                <!-- Flex container for "School invites" and button -->
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <h6 class="mb-0">School invites</h6>
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#inviteTeachersModal"> <i class="bi bi-plus"></i>Invite
+                                        Teachers</button>
+                                </div>
+                                <!-- Scrollable container for profile list -->
+                                <div class="mt-3" style="max-height: 140px; overflow-y: auto;">
+                                    <!-- Profile Item 1 -->
+                                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                        <div class="d-flex align-items-center">
+                                            <img src="download.jpg" alt="Profile 1" class="rounded-circle me-3"
+                                                style="width: 40px; height: 40px;">
+                                            <div>
+                                                <strong>Karthik Viswanathan</strong><br>
+                                                <small>kv@connectedschool.app</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted me-2">Invited</span>
+                                            <i class="bi bi-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Profile Item 2 -->
+                                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                        <div class="d-flex align-items-center">
+                                            <img src="download (1).jpg" alt="Profile 2" class="rounded-circle me-3"
+                                                style="width: 40px; height: 40px;">
+                                            <div>
+                                                <strong>Preethi Krishnan</strong><br>
+                                                <small>preethi@connectedschool.app</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted me-2">Invited</span>
+                                            <i class="bi bi-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Profile Item 3 -->
+                                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                        <div class="d-flex align-items-center">
+                                            <img src="download (2).jpg" alt="Profile 3" class="rounded-circle me-3"
+                                                style="width: 40px; height: 40px;">
+                                            <div>
+                                                <strong>Srini Priya</strong><br>
+                                                <small>srini@connectedschool.app</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted me-2">Invited</span>
+                                            <i class="bi bi-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- School Staff Section -->
+                                <div class="mt-5">
+                                    <h5>School Staff</h5>
+                                    <input type="text" id="staffSearch" class="form-control mt-2 mb-3"
+                                        placeholder="Search by name">
+                                    <div class="mt-3" style="max-height: 140px; overflow-y: auto;">
+                                        <!-- Profile Item 1 -->
+                                        <div
+                                            class="d-flex justify-content-between align-items-center py-2 border-bottom staff-item">
+                                            <div class="d-flex align-items-center">
+                                                <img src="download.jpg" alt="Profile 1" class="rounded-circle me-3"
+                                                    style="width: 40px; height: 40px;">
+                                                <div>
+                                                    <strong>Karthik Viswanathan</strong><br>
+                                                    <small>kv@connectedschool.app</small>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-muted me-2">Admin, Grade 2 Teacher, Coordinator</span>
+                                                <i class="bi bi-pencil"></i>
+                                            </div>
+                                        </div>
+                                        <!-- Profile Item 2 -->
+                                        <div
+                                            class="d-flex justify-content-between align-items-center py-2 border-bottom staff-item">
+                                            <div class="d-flex align-items-center">
+                                                <img src="download (1).jpg" alt="Profile 2" class="rounded-circle me-3"
+                                                    style="width: 40px; height: 40px;">
+                                                <div>
+                                                    <strong>Srini Priya</strong><br>
+                                                    <small>srini@connectedschool.app</small>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-muted me-2">Grade 3 Teacher</span>
+                                                <i class="bi bi-pencil"></i>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center py-2 border-bottom staff-item">
+                                            <div class="d-flex align-items-center">
+                                                <img src="download (2).jpg" alt="Profile 2" class="rounded-circle me-3"
+                                                    style="width: 40px; height: 40px;">
+                                                <div>
+                                                    <strong>Siva</strong><br>
+                                                    <small>srini@connectedschool.app</small>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-muted me-2">Grade 3 Teacher</span>
+                                                <i class="bi bi-pencil"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
+                                <!-- Content for Students Tab -->
+                                <h5>Students Connected</h5>
+                                <p>Connect all students that are using Connected School</p>
+                                <!-- Progress bar, status text, and edit link can be added similarly if needed -->
+                            </div>
+                            <div class="tab-pane fade" id="classes" role="tabpanel" aria-labelledby="classes-tab">
+                                <!-- Content for Classes Tab -->
+                                <h5>Classes Connected</h5>
+                                <p>Connect all classes that are using Connected School</p>
+                                <!-- Progress bar, status text, and edit link can be added similarly if needed -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for inviting teachers -->
+                <!--<div class="modal fade" id="inviteTeachersModal" tabindex="-1"
+                    aria-labelledby="inviteTeachersModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="inviteTeachersModalLabel">Invite Teachers</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="teacherName" class="form-label">Teacher Name</label>
+                                        <input type="text" class="form-control" id="teacherName">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="teacherEmail" class="form-label">Teacher Email</label>
+                                        <input type="email" class="form-control" id="teacherEmail">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Invite</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Connected School Support</h5>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="support-item">Onboarding support</li>
+                            <li class="support-item">Directory guide</li>
+                            <li class="support-item">Priority Support</li>
+                            <li class="support-item">Book 1:1 Call</li>
+                        </ul>
+                    </div>
+                    <br>
+                    <div class="card p-3">
+                        <h5>Update Mandate Details</h5>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="support-item">Fee Details</li>
+                            <li class="support-item">Staff Meeting</li>
+                            <li class="support-item">School Information</li>
+                        </ul>
+                    </div>
+                    <br>
+                    <div class="card p-3">
+                        <h5>Data Privacy Assurance</h5>
+                        <hr>
+                        <p>At Connected School, we take pride in our perpetual efforts to surpass all expectations in
+                            providing security and privacy to schools, students, and parents in this increasingly
+                            connected world.</p>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="support-item"><img src="download (3).jpg" alt="Badge 1" class="badge-icon">
+                                Security Badge 1</li>
+                            <li class="support-item"><img src="download (3).jpg" alt="Badge 2" class="badge-icon">
+                                Security Badge 2</li>
+                            <li class="support-item"><img src="download (3).jpg" alt="Badge 3" class="badge-icon">
+                                Security Badge 3</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Read our Policy</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  <!-- Modal for Invite Teachers -->
+  <!-- Modal for Invite Teachers -->
+<div class="modal fade" id="inviteTeachersModal" tabindex="-1" aria-labelledby="inviteTeachersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inviteTeachersModalLabel">Invite Teachers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="invite-form row">
+                    <!-- Repeat this block for more teachers -->
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">1</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">2</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">3</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">4</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">5</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">6</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">7</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">8</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">9</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex mb-3">
+                        <div class="me-3 ">
+                            <label for="sno" class="form-label">10</label>
+                            </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherName1" class="form-label">Teacher Full Name</label>
+                            <input type="text" class="form-control" id="teacherName1" placeholder="Teacher full name">
+                        </div>
+                        <div class="me-3 flex-grow-1">
+                            <label for="teacherEmail1" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmail1" placeholder="Teacher email">
+                        </div>
+                        <div class="assign-class">
+                            <label class="form-label me-2"><i class="fas fa-chevron-down"></i></label>
+                            <select class="form-select" id="teacherClass1">
+                                <option selected>Assign Class</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Add more fields as needed -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Done Adding Teachers</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript for filtering staff list based on search input
+        document.getElementById('staffSearch').addEventListener('input', function () {
+            var filter = this.value.toLowerCase();
+            var staffItems = document.querySelectorAll('.staff-item');
+            staffItems.forEach(function (item) {
+                var text = item.textContent.toLowerCase();
+                item.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>
